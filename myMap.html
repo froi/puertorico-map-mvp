@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script src="./js/lib/d3.js"></script>
+<script src="./js/lib/klass.js"></script>
+<script src="./js/atlaspr.js"></script>
+<style>
+	div.tooltip {
+	  color: #222; 
+	  background: #fff; 
+	  padding: .5em; 
+	  text-shadow: #f5f5f5 0 1px 0;
+	  border-radius: 2px; 
+	  box-shadow: 0px 0px 2px 0px #a6a6a6; 
+	  visibility: hidden; 
+	  position: absolute;
+	}
+	div.video {
+		width: 100px;
+		height: 100px;
+		background-color: black;
+
+	}
+</style>
+<body>
+  <div id = 'map'></div>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type = 'text/javascript'>
+  	var tooltip = d3.select('#map').append('div').attr('class', 'tooltip');
+
+  	var config = {
+  		node: $('#map')[0],
+  		tiles: ['pueblos'],
+  		size: 'large',
+  		on_ready: tmp
+  	};
+    var puertoRico = new AtlasPR(config);
+    //
+    //var pueblos = svg.selectAll('.pueblos');
+    function tmp() {
+    	var pueblos = puertoRico.svg.selectAll('.pueblos');
+    	console.log(pueblos);
+    	pueblos.on('mousemove', function(d,i){
+    		var mouse = d3.mouse(puertoRico.svg.node()).map(function(d) { return parseInt(d); });
+
+    		tooltip.html('<span id=' + d.properties.NAME + '>Name: ' + d.properties.NAME + '</span>'+ 
+    			'<br />' +
+    			'<div class="video" id=video-' + d.properties.NAME + '>' +
+    			'<iframe width="100" height="100" src="//www.youtube.com/embed/cHTyUz86fMY?list=PL65XgbSILalV-wInUiERrhjweMlJkukMd" frameborder="0" allowfullscreen></iframe>' +
+    			'</div>')
+    			.transition()
+    			.duration(300)
+    			.style('visibility', 'visible')
+    			.style('left', (mouse[0] + 25) + 'px')
+    			.style('top', mouse[1] + 'px');
+
+	    })
+	    .on('mouseover', function(d, i) {
+	    	d3.select(this).style('stroke-width', 3).style('fill', 'red');
+	    })
+	    .on("mouseout",  function(d,i) {
+	    	d3.select(this).style('stroke-width', 2).style('fill', 'white');
+	    	tooltip.style('visibility', 'hidden').html('');
+	        // tooltip.classed("hidden", true)
+	    });
+    }
+    
+  </script>
+</body>
+</html>
