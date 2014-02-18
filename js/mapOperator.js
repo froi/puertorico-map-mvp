@@ -23,19 +23,19 @@ var mapOperator = {
 
       //return $.ajax({
       $.ajax({
-	  type: 'GET',
-	  url: url,
-	  async: false,
-	  contentType: "application/json",
-	  dataType: 'jsonp',
-	  success: function(res) {
-	    console.log(res);
-	  }
+          type: 'GET',
+          url: url,
+          async: false,
+          contentType: "application/json",
+          dataType: 'jsonp',
+          success: function(res) {
+            console.log(res);
+          }
       });
     },
 
     bindActions: function() {
-	mapOperator.getPlayListItems('ten');
+        mapOperator.getPlayListItems('ten');
         var pueblos = mapOperator.puertoRico.svg.selectAll('.pueblos');
         pueblos.on('mousemove', function(d,i){
             var mouse = d3.mouse(mapOperator.puertoRico.svg.node()).map(function(d) { return parseInt(d); });
