@@ -2,6 +2,7 @@ var mapOperator = {
     puertoRico: {},
     pueblos: {},
     tooltip: {},
+    youTubeAPIKey: 'AIzaSyA1H0afPg9KoZXsZKr6hTRfir22QwFGNHs',
     init: function() {
       this.tooltip = d3.select('#map').append('div').attr('class', 'tooltip');
       var config = {
@@ -13,8 +14,28 @@ var mapOperator = {
       this.puertoRico = new AtlasPR(config);
     },
 
+    getPlayListItems: function(playListID) {
+      var playListID = 'PL5MlzwwjsgubqWoiJkzEfVjuty5JpSOqm'; // @todo -- bye bye once abstracted
+      var url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' +
+      playListID +
+      '&key=' +
+      this.youTubeAPIKey;
+
+      //return $.ajax({
+      $.ajax({
+	  type: 'GET',
+	  url: url,
+	  async: false,
+	  contentType: "application/json",
+	  dataType: 'jsonp',
+	  success: function(res) {
+	    console.log(res);
+	  }
+      });
+    },
+
     bindActions: function() {
-        console.log(mapOperator);
+	mapOperator.getPlayListItems('ten');
         var pueblos = mapOperator.puertoRico.svg.selectAll('.pueblos');
         pueblos.on('mousemove', function(d,i){
             var mouse = d3.mouse(mapOperator.puertoRico.svg.node()).map(function(d) { return parseInt(d); });
