@@ -15,7 +15,7 @@ var mapOperator = {
     },
 
     getPlayListItems: function(playListID) {
-      var playListID = 'PL5MlzwwjsgubqWoiJkzEfVjuty5JpSOqm'; // @todo -- bye bye once abstracted
+      var playListID = 'PL5Mlzwwjsgub3w0W18UFcIn3d998mPqXC'; // @todo -- bye bye once abstracted
       var url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' +
       playListID +
       '&key=' +
